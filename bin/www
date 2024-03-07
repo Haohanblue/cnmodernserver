@@ -11,8 +11,8 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || '8888');
+const PORT = require('../config/config.json').PORT
+var port = normalizePort(process.env.PORT || PORT);
 app.set('port', port);
 
 /**
@@ -87,4 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log("服务器已启动，端口"+PORT+"监听中")
 }
