@@ -1,8 +1,8 @@
 let mysql = require("mysql");
 let connection = mysql.createConnection({
-    host: "space.haohan.site",
+    host: "haohan.site",
     user: "cnmodern",
-    password: "Haohanblue123",
+    password: "Haohanblue233",
     database: "cnmodern"
 });
 connection.connect((err) => {
@@ -16,7 +16,7 @@ connection.connect((err) => {
 // 定义一个函数来查询成绩
 function queryScoresByYear(year) {
     return new Promise((resolve, reject) => {
-        connection.query("select * from scores where year=?", [year], (err, results) => {
+        connection.query("select province,year,scores from scores_data where year=?", [year], (err, results) => {
             if (err) {
                 console.error("查询失败" + err.message);
                 reject(err); // 调用 reject 函数并传递错误对象
