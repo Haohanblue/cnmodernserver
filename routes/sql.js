@@ -1,11 +1,23 @@
 let express=require("express")
 let router=express.Router()
-const sqlData=require("../mysql/sql1")
-
-
-router.get("/data",(req,res)=>{
-    // console.log(sqlData.result);
-        // res.send([{chartData:sqlData.result},{chartData2:sqlData.result97},{chartData3:sqlData.result98},{chartData4:sqlData.result99}])
-        res.send(sqlData.resultsArray)
-})
+const scoreAllData=require("../mysql/scoreAllData")
+const scoreAreaData=require("../mysql/scoreAreaData")
+const filledData=require("../mysql/filledData")
+const sourceData=require("../mysql/sourceData")
+router.get("/data/main", (req, res) => {
+    const results = scoreAllData.resultsArray;
+    res.send(results);
+});
+router.get("/data/area", (req, res) => {
+    const results = scoreAreaData.resultsArray;
+    res.send(results);
+});
+router.get("/data/filled", (req, res) => {
+    const results = filledData.resultsArray;
+    res.send(results);
+});
+router.get("/data/source", (req, res) => {
+    const results = sourceData.resultsArray;
+    res.send(results);
+});
 module.exports=router;
