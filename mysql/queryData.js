@@ -22,7 +22,6 @@ let filledData = {
                         params.push(provinces);
                     }
                 }
-                console.log(query);
                 connection.query(query, params, (err, results) => {
                     if (err) {
                         console.error("查询失败" + err.message);
