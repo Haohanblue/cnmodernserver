@@ -22,16 +22,32 @@ let filledData = {
                         params.push(provinces);
                     }
                 }
-                connection.query(query, params, (err, results) => {
-                    if (err) {
-                        console.error("查询失败" + err.message);
-                        reject(err); // 调用 reject 函数并传递错误对象
-                        return;
-                    }
-                    // 将结果转换为字符串，然后再解析为 JSON 对象
-                    const parsedResults = JSON.parse(JSON.stringify(results));
-                    resolve({ year: year.toString(), chartData: parsedResults }); // 调用 resolve 函数并传递结果对象
-                });
+                if (table_name === 'score_data'){
+                    query = `SELECT province,year,score,A,B,C,D,E FROM ${table_name} `
+                    connection.query(query, params, (err, results) => {
+                        if (err) {
+                            console.error("查询失败" + err.message);
+                            reject(err); // 调用 reject 函数并传递错误对象
+                            return;
+                        }
+                        // 将结果转换为字符串，然后再解析为 JSON 对象
+                        const parsedResults = JSON.parse(JSON.stringify(results));
+                        resolve({ year: year.toString(), chartData: parsedResults }); // 调用 resolve 函数并传递结果对象
+                    });
+                }
+                else{
+                    connection.query(query, params, (err, results) => {
+                        if (err) {
+                            console.error("查询失败" + err.message);
+                            reject(err); // 调用 reject 函数并传递错误对象
+                            return;
+                        }
+                        // 将结果转换为字符串，然后再解析为 JSON 对象
+                        const parsedResults = JSON.parse(JSON.stringify(results));
+                        resolve({ year: year.toString(), chartData: parsedResults }); // 调用 resolve 函数并传递结果对象
+                    });
+                }
+  
             });
         });
 
