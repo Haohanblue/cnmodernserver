@@ -1,9 +1,7 @@
 let connection = require("./dbConnection");
 
 let filledData = {
-    // 定义一个函数来查询数据
-    queryScoresByYear: function(table_name,years = [], provinces) {
-        // 检查 years 是否是一个数组，如果不是，将其转换为一个数组
+    queryScoresByYear: function(table_name, years = [], provinces) {
         if (!Array.isArray(years)) {
             years = [years];
         }
@@ -24,35 +22,30 @@ let filledData = {
                 }
                 if (table_name === 'score_data'){
                     query = `SELECT province,year,score,A,B,C,D,E FROM ${table_name} `
+                }
+                const handleQuery = () => {
                     connection.query(query, params, (err, results) => {
                         if (err) {
-                            console.error("查询失败" + err.message);
-                            reject(err); // 调用 reject 函数并传递错误对象
-                            return;
+                            if (err.fatal) {
+                                console.error('数据库连接失败，正在尝试重新连接...');
+                                connection = require("./dbConnection");
+                                handleQuery();
+                            } else {
+                                console.error("查询失败" + err.message);
+                                reject(err);
+                                return;
+                            }
+                        } else {
+                            const parsedResults = JSON.parse(JSON.stringify(results));
+                            resolve({ year: year.toString(), chartData: parsedResults });
                         }
-                        // 将结果转换为字符串，然后再解析为 JSON 对象
-                        const parsedResults = JSON.parse(JSON.stringify(results));
-                        resolve({ year: year.toString(), chartData: parsedResults }); // 调用 resolve 函数并传递结果对象
                     });
-                }
-                else{
-                    connection.query(query, params, (err, results) => {
-                        if (err) {
-                            console.error("查询失败" + err.message);
-                            reject(err); // 调用 reject 函数并传递错误对象
-                            return;
-                        }
-                        // 将结果转换为字符串，然后再解析为 JSON 对象
-                        const parsedResults = JSON.parse(JSON.stringify(results));
-                        resolve({ year: year.toString(), chartData: parsedResults }); // 调用 resolve 函数并传递结果对象
-                    });
-                }
-  
+                };
+                handleQuery();
             });
         });
 
         return Promise.all(promises);
     }
 };
-
 module.exports = filledData;
