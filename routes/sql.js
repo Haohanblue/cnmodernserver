@@ -27,8 +27,4 @@ router.get("/download/source", (req, res) => {
 router.get("/download/filled", (req, res) => {
     handleDownloadRequest("filled_data", req, res);
 });
-router.get("/download/index", (req, res) => {
-    handleDownloadRequest("index_data", req, res);
-});
-
 module.exports=router;
