@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const ExcelJS = require('exceljs');
+const path = require('path');
 let connection = require("./dbConnection");
 function handleDownloadRequest(dataType, req, res) {
     const year = req.query.year;
@@ -53,26 +54,29 @@ function handleDownloadRequest(dataType, req, res) {
         codes = codes.split(',');
         let query_2;
 
-            if (codes) {
+        if (codes) {
             query_2 = "SELECT * FROM index_data WHERE code IN (?)";
-            } else {
+        } else {
             query_2 = "SELECT * FROM index_data";
-            }
-        connection.query(query_2,[codes],(error,results,fields)=>{
-            if(error) throw error;
+        }
+        
+        connection.query(query_2, [codes], (error, results, fields) => {
+            if (error) throw error;
             let worksheet2 = workbook.addWorksheet('dict');
             worksheet2.columns = fields.map(field => ({ header: field.name, key: field.name }));
             results.forEach(row => worksheet2.addRow(row));
-                    // 将Excel工作簿转换为Buffer
-            workbook.xlsx.writeBuffer().then(buffer => {
-            // 设置响应头以发送xlsx文件
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            res.setHeader('Content-Disposition', `attachment; filename=${dataType}.xlsx`);
-
-            // 发送xlsx文件
-            res.send(buffer);
+        
+            // 将Excel工作簿保存为文件
+            let filename = `${dataType}.xlsx`;
+            workbook.xlsx.writeFile(filename).then(() => {
+                // 设置响应头以发送xlsx文件
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
+        
+                // 发送xlsx文件
+                res.sendFile(path. resolve(filename));
+            });
         });
-        })
 
     });
 }
