@@ -23,7 +23,6 @@ router.get("/data/index/:code?", (req, res) => {
 router.get("/download/source", (req, res) => {
     handleDownloadRequest("source_data", req, res);
 });
-
 router.get("/download/filled", (req, res) => {
     handleDownloadRequest("filled_data", req, res);
 });
