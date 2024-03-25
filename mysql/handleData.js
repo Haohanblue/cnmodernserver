@@ -2,9 +2,7 @@ let connection = require("./dbConnection");
 function handleDataQuery(dataType, req, res) {
     const year = req.query.year;
     const province = req.query.province;
-
     const additionalColumns = req.query.columns ? req.query.columns.split(',') : ['*'];
-
     // 默认查询的列
     let defaultColumns = ['year', 'province'];
     let columns;
@@ -17,18 +15,21 @@ function handleDataQuery(dataType, req, res) {
     }
     // 构建基础SQL查询语句
     let sql = `SELECT ${columns.join(',')} FROM ${dataType}`;
+
     // 根据参数存在与否添加条件
     let conditions = [];
     let params = [];
     if (year) {
-        conditions.push('year = ?');
-        params.push(year);
+        let years = year.split(',');
+        conditions.push(`year IN (${Array(years.length).fill('?').join(',')})`);
+        params.push(...years);
     }
     if (province) {
-        conditions.push('province = ?');
-        params.push(province);
+        let provinces = province.split(',');
+        conditions.push(`province IN (${Array(provinces.length).fill('?').join(',')})`);
+        params.push(...provinces);
     }
-
+    
     // 如果有条件，将它们添加到查询语句中
     if (conditions.length > 0) {
         sql += ' WHERE ' + conditions.join(' AND ');
@@ -36,7 +37,6 @@ function handleDataQuery(dataType, req, res) {
     // 执行SQL查询
     connection.query(sql, params, (error, results) => {
         if (error) {
-            console.log(sql)
             res.status(500).send('Server Error');
             return;
         }
