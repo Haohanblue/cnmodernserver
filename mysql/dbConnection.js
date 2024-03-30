@@ -1,10 +1,13 @@
 let mysql = require("mysql");
-
+const DBHOST = require('../config/config.json').DBHOST
+const DBUSER = require('../config/config.json').DBUSER
+const DBPASSWORD = require('../config/config.json').DBPASSWORD
+const DBDATABASE = require('../config/config.json').DBDATABASE
 let dbConfig = {
-    host: "haohan.site",
-    user: "cnmodern",
-    password: "Haohanblue233",
-    database: "cnmodern"
+    host: DBHOST,
+    user: DBUSER,
+    password: DBPASSWORD,
+    database: DBDATABASE
 };
 
 let connection;
