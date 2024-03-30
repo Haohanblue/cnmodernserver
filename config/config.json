@@ -2,6 +2,6 @@
   "PORT": 23334,
   "DBHOST": "localhost",
   "DBUSER":"cnmodern",
-  "DBPASSWORD":"Haohanblue233.",
+  "DBPASSWORD":"Haohanblue233",
   "DBDATABASE":"cnmodern"
 }
