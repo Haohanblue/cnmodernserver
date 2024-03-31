@@ -1,7 +1,8 @@
 {
   "PORT": 23334,
-  "DBHOST": "localhost",
+  "DBHOST": null,
   "DBUSER":"cnmodern",
   "DBPASSWORD":"Haohanblue233",
-  "DBDATABASE":"cnmodern"
+  "DBDATABASE":"cnmodern",
+  "ISLOCAL": true
 }
