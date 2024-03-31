@@ -4,5 +4,5 @@
   "DBUSER":"cnmodern",
   "DBPASSWORD":"Haohanblue233",
   "DBDATABASE":"cnmodern",
-  "ISLOCAL": false
+  "ISLOCAL": true
 }
