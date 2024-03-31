@@ -1,13 +1,19 @@
 let mysql = require("mysql");
-const DBHOST = require('../config/config.json').DBHOST
-const DBUSER = require('../config/config.json').DBUSER
-const DBPASSWORD = require('../config/config.json').DBPASSWORD
-const DBDATABASE = require('../config/config.json').DBDATABASE
+const fs = require('fs');
+// 读取JSON文件
+let rawdata = fs.readFileSync('./config/config.json');
+let config = JSON.parse(rawdata);
+// 本地调试
+if (config.ISLOCAL) {
+    config.DBHOST = 'cnmodern.site';
+} else {
+    config.DBHOST = 'localhost';
+}
 let dbConfig = {
-    host: DBHOST,
-    user: DBUSER,
-    password: DBPASSWORD,
-    database: DBDATABASE
+    host: config.DBHOST,
+    user: config.DBUSER,
+    password: config.DBPASSWORD,
+    database: config.DBDATABASE,
 };
 
 let connection;
