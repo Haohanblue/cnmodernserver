@@ -1,7 +1,7 @@
 {
   "PORT": 23334,
-  "DBHOST": "cnmodern.site",
+  "DBHOST": "localhost",
   "DBUSER":"cnmodern",
-  "DBPASSWORD":"Haohanblue233.",
+  "DBPASSWORD":"Haohanblue233",
   "DBDATABASE":"cnmodern"
 }
