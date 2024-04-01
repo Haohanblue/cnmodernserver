@@ -1,8 +1,9 @@
 {
   "PORT": 23334,
-  "DBHOST": null,
+  "DBHOST": "bj-cynosdbmysql-grp-3upmvv08.sql.tencentcdb.com",
+  "DBPORT":27017,
   "DBUSER":"cnmodern",
-  "DBPASSWORD":"Haohanblue233",
+  "DBPASSWORD":"Haohanblue233.",
   "DBDATABASE":"cnmodern",
-  "ISLOCAL": false
+  "ISLOCAL":2
 }
